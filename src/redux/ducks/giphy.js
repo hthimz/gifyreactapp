@@ -1,4 +1,3 @@
-import { createSelector } from "reselect";
 import { useDispatch, useSelector } from 'react-redux';
 
 export const GET_TRENDING_GIF="GET_TRENDING_GIF";
