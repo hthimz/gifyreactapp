@@ -6,7 +6,7 @@ return axios.request({
     method:"get",
     url:"https://api.giphy.com/v1/gifs/trending",
     params:{
-        api_key:"LwCTfUQGCqOnL6ncWdeL4CldkMlRV7Je"
+        api_key:process.env.REACT_APP_GIFY_KEY
     }
 })
 }
@@ -17,7 +17,7 @@ export function getSearchedGify(action){
         method:"get",
         url:"https://api.giphy.com/v1/gifs/search",
         params:{
-            api_key:"LwCTfUQGCqOnL6ncWdeL4CldkMlRV7Je",
+            api_key:process.env.REACT_APP_GIFY_KEY,
             q: data
         },
         limit:50
