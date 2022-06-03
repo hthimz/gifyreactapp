@@ -6,8 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from "./redux/configureStore";
 import ThemeContext,{themes} from './utils/theme-context';
+import axios from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+axios.interceptors.request.use(request=>{
+  request.params={api_key:process.env.REACT_APP_GIFY_KEY};
+  return request;
+});
 root.render(
   <React.StrictMode>
     <Provider store={store}>
