@@ -7,7 +7,7 @@ import {debounce, getItemsFromArray} from './utils/helper';
 import AppLogic from './hooks/App/appLogic';
 
 function App() {
-const{ query,paginatedGifs,setPaginatedGifs,currentPage,setCurrentPage,indexOfLastItem,indexOfFirstItem,theme,handleThemeToggle,gifs,lastGifRefElement,handleSearch
+const{ query,setQuery,paginatedGifs,setPaginatedGifs,currentPage,setCurrentPage,indexOfLastItem,indexOfFirstItem,theme,handleThemeToggle,gifs,lastGifRefElement,
 }= AppLogic();
 
 const dispatch=useDispatch();
@@ -19,14 +19,15 @@ const dispatch=useDispatch();
 useEffect(()=>{
   const data = gifs.data.data ? getItemsFromArray(indexOfFirstItem,indexOfLastItem,gifs.data.data):[];
   setPaginatedGifs([...paginatedGifs,...data])
-},[currentPage, gifs]);
+},[currentPage,gifs]);
 
-useEffect(()=>{
+const handleSearch=(e)=>{
+  setQuery(e.target.value);
   setCurrentPage(1);
   setPaginatedGifs([]);
   const betterHandleSearch = debounce(()=>dispatch(getSearchedGify(query)),500);
   betterHandleSearch();
-},[query])
+}
 
 const renderGifCards=()=>{
     return paginatedGifs.map((el,index)=>{

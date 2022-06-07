@@ -16,24 +16,22 @@ const [theme,setTheme]= useState(themes.dark);
 const observer= useRef();
 const lastGifRefElement= useCallback(node=>{
   if(observer.current) observer.current.disconnect()
+  if(gifs.data.data && gifs.data.data.length>=indexOfLastItem){
   observer.current= new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){
+    if(entries[0].isIntersecting&& gifs.data.data){
       setCurrentPage(currentPage+1);
     }
   })
+  }
   if(node) observer.current.observe(node);
-},
+
+},[indexOfLastItem,gifs]
 // [] Deps can be added here
 )
 
 const handleThemeToggle=()=>{
     return theme ===themes.dark? setTheme(themes.light) : setTheme(themes.dark);
     }
-
-const handleSearch=(e)=>{
-        setQuery(e.target.value);
-      }
-    
 return {
     query,
     setQuery,
@@ -48,8 +46,7 @@ return {
     setTheme,
     handleThemeToggle,
     gifs,
-    lastGifRefElement,
-    handleSearch
+    lastGifRefElement
 }
 }
 
