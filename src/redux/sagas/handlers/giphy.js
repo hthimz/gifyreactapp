@@ -10,6 +10,7 @@ export function* handleGetTrendingGify(action){
      yield put(setTrendingGify(data));
  }catch(error){
      console.log("Error",error);
+     //Error Handler here
  }
 }
 
@@ -21,5 +22,6 @@ export function* handleSearchedGify(action){
      yield put(setTrendingGify(data));
  }catch(error){
      console.log("Error",error);
+     //Error Handler here
  }
 }

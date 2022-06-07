@@ -15,7 +15,7 @@ export function getSearchedGify(action){
         url:"https://api.giphy.com/v1/gifs/search",
         params:{
             q: data
-        },
-        limit:50
+        }
+        //default response for beta user is 50 only
     })
  }

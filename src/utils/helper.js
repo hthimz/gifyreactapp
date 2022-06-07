@@ -15,9 +15,9 @@ return ()=>{
     }
 }};
 
-var timer;
-var count=0;
-export function debounce(func, timeout = 300){
+let timer;
+// export const debounce=(func, timeout = 300)=>{
+export const debounce=(func, timeout = 300)=>{
     return (...args) => {
       clearTimeout(timer);
       timer = setTimeout(() => {

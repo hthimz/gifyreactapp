@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 axios.interceptors.request.use(request=>{
-  request.params={api_key:process.env.REACT_APP_GIFY_KEY};
+  request.params={...request.params,api_key:process.env.REACT_APP_GIFY_KEY};
   return request;
 });
 root.render(
