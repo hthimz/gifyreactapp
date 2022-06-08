@@ -1,7 +1,7 @@
 import './App.css';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import {getTrendingGify, getSearchedGify, setLoadingTrue, resetGifData} from "./redux/ducks/giphy";
+import {getTrendingGify, getSearchedGify, resetGifData} from "./redux/ducks/giphy";
 import GifCard from './components/GifCard';
 import {debounce, getItemsFromArray} from './utils/helper';
 import AppLogic from './hooks/App/appLogic';
@@ -11,15 +11,21 @@ const{ query,setQuery,paginatedGifs,setPaginatedGifs,currentPage,setCurrentPage,
   searcheGifsTouched, setsearcheGifsTouched }= AppLogic();
 const dispatch=useDispatch();
 
-//  useEffect(()=>{
-//     dispatch(getTrendingGify({offset : 0}));
-// },[]);
-
 useEffect(()=>{
   let offsetValue= itemsPerPage * (currentPage-1)
-  let action = searcheGifsTouched ? getSearchedGify : getTrendingGify ;
-  dispatch(action(searcheGifsTouched ? {offset : offsetValue,query}:{offset : offsetValue}));
+  if(query==='' && searcheGifsTouched){
+    dispatch(getTrendingGify({offset : offsetValue}))
+  }else{
+    let action = searcheGifsTouched ? getSearchedGify : getTrendingGify ;
+    dispatch(action(searcheGifsTouched ? {offset : offsetValue,query}:{offset : offsetValue}));
+  }
 },[currentPage]);
+
+useEffect(()=>{
+if(searcheGifsTouched && query===''){
+  dispatch(getTrendingGify({offset : 0}));
+}
+},[query])
 
 useEffect(()=>{
   const data = gifs.data.data ? getItemsFromArray(indexOfFirstItem,indexOfLastItem,gifs.data.data):[];
@@ -33,7 +39,7 @@ const handleSearch=(e)=>{
   setPaginatedGifs([]);
   setsearcheGifsTouched(true);
   const betterHandleSearch = debounce(()=>dispatch(getSearchedGify({query:e.target.value,offset:0})),500);
-  betterHandleSearch();
+  query!==''&&betterHandleSearch();
 }
 
 const renderGifCards=()=>{
